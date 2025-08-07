@@ -1,0 +1,25 @@
+# オブジェクトファイル
+*.o
+*.obj
+
+# バイナリファイル
+*.exe
+*.out
+*.app
+*.bin
+
+# ライブラリファイル
+*.a
+*.so
+*.dylib
+*.dll
+
+# makeで生成されるファイル
+Makefile.deps
+.deps/
+
+# その他の一時ファイル
+*.tmp
+*.log
+*~
+.DS_Store
