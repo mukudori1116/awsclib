@@ -16,9 +16,8 @@ CORE_OBJECTS = $(OBJDIR)/aws_client.o
 CORE_LIB_OBJECTS = $(OBJDIR)/aws_client_lib.o
 SERVICE_OBJECTS = $(OBJDIR)/aws_sts.o $(OBJDIR)/aws_sts_get.o
 
-# Library objects (core only)
+# Library objects
 CORE_LIB_ONLY = $(CORE_LIB_OBJECTS)
-# All library objects including services
 ALL_LIB_OBJECTS = $(CORE_LIB_OBJECTS) $(SERVICE_OBJECTS)
 
 # Default target
@@ -30,7 +29,7 @@ lib: $(CORE_LIB_ONLY)
 # Build all libraries including services
 lib-all: $(ALL_LIB_OBJECTS)
 
-# Create main executable (core library only)
+# Create main executable
 $(TARGET): $(CORE_OBJECTS)
 	$(CC) $(CORE_OBJECTS) -o $(TARGET) $(LIBS)
 
@@ -70,11 +69,10 @@ get-example: $(ALL_LIB_OBJECTS)
 clean:
 	rm -rf $(OBJDIR) $(TARGET) basic_usage sts_example custom_request get_method_example
 
-# Run
+# Run targets
 run: $(TARGET)
 	./$(TARGET)
 
-# Run samples
 run-basic: basic
 	./basic_usage
 
@@ -91,36 +89,4 @@ run-get: get-example
 debug: CFLAGS += -g -DDEBUG
 debug: all
 
-# Individual service tests
-test-sts: sts-example
-	@echo "=== STS Test ==="
-	@./sts_example | grep -A 20 "STS"
-
-# List library files
-list-files:
-	@echo "=== Project Structure ==="
-	@echo "Core library: $(CORE_SOURCES)"
-	@echo "Service implementations: $(SERVICE_SOURCES)"
-	@echo "Examples: $(EXAMPLEDIR)/*.c"
-
-# Help
-help:
-	@echo "=== AWS Client Library Makefile ==="
-	@echo "Targets:"
-	@echo "  all          - Build core library"
-	@echo "  lib          - Build core library object files"
-	@echo "  lib-all      - Build all library object files including services"
-	@echo "  examples     - Build all examples"
-	@echo "  basic        - Build basic usage example"
-	@echo "  sts-example  - Build STS usage example"
-	@echo "  custom       - Build custom request example"
-	@echo "  get-example  - Build GET method example"
-	@echo "  run          - Run core library"
-	@echo "  run-basic    - Run basic usage example"
-	@echo "  run-sts      - Run STS usage example"
-	@echo "  run-custom   - Run custom request example"
-	@echo "  run-get      - Run GET method example"
-	@echo "  clean        - Remove build artifacts"
-	@echo "  debug        - Debug build"
-
-.PHONY: all lib lib-all examples basic sts-example custom get-example clean run run-basic run-sts run-custom run-get debug test-sts list-files help
+.PHONY: all lib lib-all examples basic sts-example custom get-example clean run run-basic run-sts run-custom run-get debug
